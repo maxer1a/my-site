@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Propify – AI Freelance Proposal Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>🚀 Propify</h1>
+      <p>AI-powered freelance proposal generator</p>
+    </header>
+
+    <main>
+      <form id="proposalForm">
+        <div class="form-group">
+          <label for="jobDescription">📝 Job Description</label>
+          <textarea id="jobDescription" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="skills">🧠 Your Skills & Experience</label>
+          <textarea id="skills" required></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="generateBtn">Generate Proposal</button>
+          <span id="statusMessage" class="status"></span>
+        </div>
+      </form>
+
+      <section class="output-section hidden" id="outputSection">
+        <h2>📄 Generated Proposal</h2>
+        <pre id="proposalOutput"></pre>
+        <button id="copyBtn">📋 Copy to Clipboard</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Propify. Built with AI for freelancers.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
