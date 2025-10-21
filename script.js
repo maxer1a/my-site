@@ -17,71 +17,51 @@ form.addEventListener("submit", async (e) => {
   const skills = skillsField.value.trim();
 
   if (!job || !skills) {
-    showStatus("❌ Please fill in both fields.", "error");
+    showStatus("Please fill in both fields.", "error");
     return;
   }
 
-  showStatus("⏳ Generating proposal using AI...");
+  showStatus("Generating proposal...");
   generateBtn.disabled = true;
 
   try {
-    const proposal = await simulateAIResponse(job, skills);
+    const proposal = await generateProposal(job, skills);
     outputBox.textContent = proposal;
     outputSection.classList.remove("hidden");
-    showStatus("✅ Proposal generated successfully!", "success");
+    showStatus("Proposal generated successfully.", "success");
   } catch (err) {
     console.error(err);
-    showStatus("⚠️ Something went wrong.", "error");
+    showStatus("An error occurred while generating proposal.", "error");
   } finally {
     generateBtn.disabled = false;
   }
 });
 
-// Handle copy
+// Copy to clipboard
 copyBtn.addEventListener("click", () => {
   const text = outputBox.textContent;
   navigator.clipboard.writeText(text).then(() => {
-    alert("✅ Proposal copied to clipboard!");
+    alert("Proposal copied to clipboard!");
   });
 });
 
-// Show messages
+// Show status message
 function showStatus(msg, type = "info") {
   statusMsg.textContent = msg;
   statusMsg.style.color =
     type === "error" ? "red" :
     type === "success" ? "green" :
-    type === "info" ? "#333" : "#0d6efd";
+    "#333";
 }
 
-// Clear previous result
+// Reset output
 function resetOutput() {
   outputBox.textContent = "";
   outputSection.classList.add("hidden");
   showStatus("");
 }
 
-// Simulated AI response (replace with OpenAI later)
-function simulateAIResponse(job, skills) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(`
-Dear Client,
-
-I was excited to see your posting and believe I’m an excellent fit for this opportunity.
-
-With a background in ${skills}, I understand the core requirements of your project and am confident I can deliver high-quality results efficiently and professionally.
-
-I’d be happy to discuss further how I can contribute to your goals.
-
-Looking forward to hearing from you.
-
-Best regards,  
-[Your Name]
-      `);
-    }, 2000);
-  });
-}
+// Real backend call to generate proposal using OpenAI API
 async function generateProposal(job, skills) {
   const response = await fetch('http://localhost:3000/generate', {
     method: 'POST',
