@@ -82,3 +82,22 @@ Best regards,
     }, 2000);
   });
 }
+async function generateProposal(job, skills) {
+  const response = await fetch('http://localhost:3000/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      jobDescription: job,
+      userSkills: skills
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to generate proposal from API');
+  }
+
+  const data = await response.json();
+  return data.proposal;
+}
